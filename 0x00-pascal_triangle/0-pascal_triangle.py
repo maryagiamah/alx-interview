@@ -6,7 +6,7 @@
 def pascal_triangle(n):
     """ Returns list of list """
     if n <= 0:
-        return [[]]
+        return []
 
     pasc_arr = [[1]]
     for idx in range(1, n):
