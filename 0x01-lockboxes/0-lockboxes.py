@@ -4,7 +4,7 @@
 
 def canUnlockAll(boxes):
     """Write a method that determines if all the boxes can be opened."""
-    flag = 1
+    flag = 0
     for i in range(1, len(boxes) - 1):
         flag = 1
         j = i
