@@ -17,7 +17,8 @@ def sig_int(signum, frame):
 
     print(f"File size: {total_size}")
     for k, v in sorted(status_code.items()):
-        print(f"{k}: {v}")
+        if v > 0:
+            print(f"{k}: {v}")
 
 
 def stats():
@@ -34,15 +35,16 @@ def stats():
         match = re.fullmatch(pattern, line.strip())
 
         if match:
-            code = match.group(1)
-            total_size += int(match.group(2))
+            code = match.group(2)
+            total_size += int(match.group(3))
             if code in status_code.keys():
                 status_code[code] = status_code.get(code) + 1
 
-        if count % 10 == 0:
-            print(f"File size: {total_size}")
-            for k, v in status_code.items():
-                print(f"{k}: {v}")
+            if count % 10 == 0:
+                print(f"File size: {total_size}")
+                for k, v in status_code.items():
+                    if v > 0:
+                        print(f"{k}: {v}")
 
 
 if __name__ == '__main__':
