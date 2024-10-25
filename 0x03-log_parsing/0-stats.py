@@ -11,18 +11,8 @@ status_code = {
     }
 
 
-def sig_int(signum, frame):
-    """Handle sigint error"""
-    global total_size, status_code
-    print(f"File size: {total_size}")
-    for k, v in sorted(status_code.items()):
-        if v > 0:
-            print(f"{k}: {v}")
-
-
 def stats():
     """Stats function"""
-    signal.signal(signal.SIGINT, sig_int)
     global total_size, status_code
     count = 0
 
@@ -41,12 +31,14 @@ def stats():
                 if code in status_code.keys():
                     status_code[code] = status_code.get(code) + 1
 
-                if count % 10 == 0:
-                    print(f"File size: {total_size}")
-                    for k, v in status_code.items():
-                        if v > 0:
-                            print(f"{k}: {v}")
-    except EOFError:
+            if count % 10 == 0:
+                print(f"File size: {total_size}")
+                for k, v in status_code.items():
+                    if v > 0:
+                        print(f"{k}: {v}")
+    except (EOFError, KeyboardInterrupt) as err:
+        pass
+    finally:
         print(f"File size: {total_size}")
         for k, v in status_code.items():
             if v > 0:
