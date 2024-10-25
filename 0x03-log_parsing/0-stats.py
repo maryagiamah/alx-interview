@@ -20,7 +20,7 @@ def sig_int(signum, frame):
             if v > 0:
                 print(f"{k}: {v}")
     except Exception:
-        print(frame)
+        sys.exit()
 
 
 def stats():
