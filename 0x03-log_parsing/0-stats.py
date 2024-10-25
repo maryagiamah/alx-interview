@@ -22,6 +22,7 @@ def sig_int(signum, frame):
 
 def stats():
     """Stats function"""
+    signal.signal(signal.SIGINT, sig_int)
     global total_size, status_code
     count = 0
 
@@ -45,7 +46,7 @@ def stats():
                     for k, v in status_code.items():
                         if v > 0:
                             print(f"{k}: {v}")
-    except :
+    except EOFError:
         print(f"File size: {total_size}")
         for k, v in status_code.items():
             if v > 0:
@@ -53,5 +54,4 @@ def stats():
 
 
 if __name__ == '__main__':
-    signal.signal(signal.SIGINT, sig_int)
     stats()
