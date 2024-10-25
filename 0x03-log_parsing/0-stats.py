@@ -14,7 +14,7 @@ try:
     for line in sys.stdin:
         pattern = (
                 r"^(\d{1,3}\.?){4} - \[.*?\] "
-                r"\"GET \/projects\/260 HTTP\/1.1\" (\d{0,3}) (\d{1,4})"
+                r"\"GET \/projects\/260 HTTP\/1.1\" (\d{3}) (\d{1,4})"
             )
         match = re.fullmatch(pattern, line.strip())
 
