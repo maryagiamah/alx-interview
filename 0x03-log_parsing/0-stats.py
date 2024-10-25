@@ -20,7 +20,7 @@ def sig_int(signum, frame):
             if v > 0:
                 print(f"{k}: {v}")
     except Exception:
-        sys.exit()
+        print(frame)
 
 
 def stats():
@@ -28,25 +28,31 @@ def stats():
     global total_size, status_code
     count = 0
 
-    for line in sys.stdin:
-        count += 1
-        pattern = (
-                r"^(\d{1,3}\.?){4} - \[.*?\] "
-                r"\"GET \/projects\/260 HTTP\/1.1\" (\d{3}) (\d{1,4})"
-            )
-        match = re.fullmatch(pattern, line.strip())
+    try:
+        for line in sys.stdin:
+            count += 1
+            pattern = (
+                    r"^(\d{1,3}\.?){4} - \[.*?\] "
+                    r"\"GET \/projects\/260 HTTP\/1.1\" (\d{3}) (\d{1,4})"
+                )
+            match = re.fullmatch(pattern, line.strip())
 
-        if match:
-            code = match.group(2)
-            total_size += int(match.group(3))
-            if code in status_code.keys():
-                status_code[code] = status_code.get(code) + 1
+            if match:
+                code = match.group(2)
+                total_size += int(match.group(3))
+                if code in status_code.keys():
+                    status_code[code] = status_code.get(code) + 1
 
-            if count % 10 == 0:
-                print(f"File size: {total_size}")
-                for k, v in status_code.items():
-                    if v > 0:
-                        print(f"{k}: {v}")
+                if count % 10 == 0:
+                    print(f"File size: {total_size}")
+                    for k, v in status_code.items():
+                        if v > 0:
+                            print(f"{k}: {v}")
+    except EOFError:
+        print(f"File size: {total_size}")
+        for k, v in status_code.items():
+            if v > 0:
+                print(f"{k}: {v}")
 
 
 if __name__ == '__main__':
