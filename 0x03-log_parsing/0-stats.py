@@ -31,7 +31,7 @@ try:
             for k, v in status_code.items():
                 if v > 0:
                     print(f"{k}: {v}")
-except (EOFError, KeyboardInterrupt) as err:
+except Exception:
     pass
 finally:
     print(f"File size: {total_size}")
