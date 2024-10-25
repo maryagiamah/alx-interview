@@ -14,17 +14,17 @@ try:
     for line in sys.stdin:
         pattern = (
                 r"^(\d{1,3}\.?){4} - \[.*?\] "
-                r"\"GET \/projects\/260 HTTP\/1.1\" (\d{3}) (\d{1,4})"
+                r"\"GET \/projects\/260 HTTP\/1.1\" (\d{0,3}) (\d{1,4})"
             )
         match = re.fullmatch(pattern, line.strip())
 
         if match:
-            count += 1
             code = match.group(2)
             total_size += int(match.group(3))
 
             if code in status_code.keys():
                 status_code[code] = status_code.get(code) + 1
+                count += 1
 
         if count % 10 == 0:
             print(f"File size: {total_size}")
