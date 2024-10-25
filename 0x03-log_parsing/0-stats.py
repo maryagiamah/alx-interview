@@ -30,7 +30,6 @@ def stats():
 
     try:
         for line in sys.stdin:
-            count += 1
             pattern = (
                     r"^(\d{1,3}\.?){4} - \[.*?\] "
                     r"\"GET \/projects\/260 HTTP\/1.1\" (\d{3}) (\d{1,4})"
@@ -38,6 +37,7 @@ def stats():
             match = re.fullmatch(pattern, line.strip())
 
             if match:
+                count += 1
                 code = match.group(2)
                 total_size += int(match.group(3))
                 if code in status_code.keys():
