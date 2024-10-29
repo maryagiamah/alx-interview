@@ -18,7 +18,7 @@ def validUTF8(data):
             if cont_bit > 4 or cont_bit == 1:
                 return False
         else:
-            if (val & (128 >> 1)):
+            if not (val & (1 << 7) and not (val & (1 << 6))):
                 return False
         cont_bit -= 1
     return cont_bit == 0
