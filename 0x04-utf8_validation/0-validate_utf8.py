@@ -13,13 +13,13 @@ def validUTF8(data):
             while val & ascii_bit:
                 ascii_bit = ascii_bit >> 1
                 cont_bit += 1
-            if not cont_bit:
+            if cont_bit == 0:
                 continue
             if cont_bit > 4 or cont_bit == 1:
                 return False
         else:
             if not (val & (1 << 7)):
-                return False
+                return False 
         cont_bit -= 1
     if cont_bit == 0:
         return True
